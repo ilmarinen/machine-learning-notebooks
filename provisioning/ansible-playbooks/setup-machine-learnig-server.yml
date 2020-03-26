@@ -1,0 +1,6 @@
+- name: Setup Machine Learning GPU Server
+  hosts: gpu_servers
+  gather_facts: False
+  become: yes
+  roles:
+    - cuda
