@@ -10,11 +10,22 @@
 - name: Dpkg Cuda package
   shell: "dpkg -i cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb"
 
+- name: Delete deb file
+  file:
+    path: "cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb"
+    state: absent
+
 - name: Add key to apt repositories
   shell: "apt-key add /var/cuda-repo-10-2-local-10.2.89-440.33.01/7fa2af80.pub"
 
 - name: Update Apt Cache
   shell: "apt-get update"
+
+- name: apt autoremove
+  shell: "apt-get autoremove"
+
+- name: apt autoclean
+  shell: "apt-get autoclean"
 
 - name: Apt fix install
   shell: "apt-get -f -y install"
