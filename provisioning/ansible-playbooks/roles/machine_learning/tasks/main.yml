@@ -22,16 +22,20 @@
 - name: Install Pip3
   apt: pkg=python3-pip state=present update_cache=true
 
+- name: Check if Machine Learning Notebooks Present
+  stat:
+    path: /home/ubuntu/machine-learning-notebooks
+  register: coderoot
+
 - name: Clone Machine Learning Notebooks
   git:
     repo: "ssh://git@github.com/ilmarinen/machine-learning-notebooks.git"
     version: master
-    dest: /var/www/diagnoss/code/gatenoss
+    dest: /home/ubuntu/machine-learning-notebooks
     accept_hostkey: yes
   become: no
-
-- name: Create virtualenv
-  shell: "python3 -m venv /home/ubuntu/venv"
+  when: not coderoot.stat.exists
 
 - name: Install Python dependencies
-  shell: "/home/ubuntu/venv/bin/pip install -r /home/ubuntu/machine-learning-notebooks/requirements.txt"
+  shell: "pip install -r /home/ubuntu/machine-learning-notebooks/requirements.txt"
+  become: no
