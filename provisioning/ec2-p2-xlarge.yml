@@ -22,8 +22,14 @@ Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
+      BlockDeviceMappings:
+        -
+          DeviceName: "/dev/sda1"
+          Ebs:
+            VolumeSize: 24
+            VolumeType: gp2
       InstanceType: p2.xlarge
       KeyName: "xavier-macbook-pro-2020"
-      ImageId: ami-005117da5d1874d04
+      ImageId: ami-0e23ea41be77feacd
       SecurityGroups:
         - !Ref SecurityGroup

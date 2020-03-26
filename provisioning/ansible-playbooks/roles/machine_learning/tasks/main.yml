@@ -36,14 +36,10 @@
   become: no
   when: not coderoot.stat.exists
 
-- name: Uninstall Pytorch
-  shell: "pip uninstall torch"
-  become: no
-
-- name: LD Path
-  shell: "export LD_LIBRARY_PATH=/usr/local/cuda/lib64 && sudo ldconfig"
+- name: Create virtualenv
+  shell: "python3 -m venv /home/ubuntu/venv"
   become: no
 
 - name: Install Python dependencies
-  shell: "pip install -r /home/ubuntu/machine-learning-notebooks/requirements.txt"
+  shell: "/home/ubuntu/venv/bin/pip install -r /home/ubuntu/machine-learning-notebooks/requirements.txt"
   become: no
