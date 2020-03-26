@@ -19,14 +19,23 @@ Host <hostname> <host-ip>
 
 `ansible-playbook setup-machine-learning-server.yaml -i hosts --user=ubuntu`
 
-4. SSH into the EC2 instance and start Jupyter notebooks
+4. From a different terminal, open an SSH terminal into the EC2 instance
+
+```
+ssh ubuntu@<ip-address-or-hostname> -NL 1234:localhost:1234
+```
+
+5. SSH into the EC2 instance and start Jupyter notebooks
 
 ```
 jupyter notebook --no-browser --port 1234
 ```
 
-5. From a different terminal, open an SSH terminal into the EC2 instance
+(Cut and paste the login URL with token into your local browser, and you should
+connect to the Notebook server.)
 
-```
-ssh ubuntu@<ip-address-or-hostname> -NL 1234:localhost:1234
-```
+
+6. After working on your notebook a little and saving it, make sure to copy it to your local
+repo and commit changes:
+
+`scp ubuntu@<ec2-host-name>:~/machine-learning-notebooks/<notebook-name>.ipynb ./`
