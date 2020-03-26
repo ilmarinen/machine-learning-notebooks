@@ -16,3 +16,15 @@ Host <hostname> <host-ip>
 ```
 
 `ansible-playbook setup-database.yaml -i hosts --user=ilmarinen --extra-vars "ansible_sudo_pass=blacksmith database_password=<sidenoss-database-password>"`
+
+3. SSH into the EC2 instance and start Jupyter notebooks
+
+```
+jupyter notebook --no-browser --port 1234
+```
+
+4. From a different terminal, open an SSH terminal into the EC2 instance
+
+```
+ssh ubuntu@<ip-address-or-hostname> -NL 1234:localhost:1234
+```
