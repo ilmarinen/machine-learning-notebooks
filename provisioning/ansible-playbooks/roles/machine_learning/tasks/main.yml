@@ -1,0 +1,37 @@
+- name: Install Virtualenv
+  apt: pkg=python3-venv state=present update_cache=true
+
+- name: Libblas setup
+  apt: pkg=libblas-dev state=present update_cache=true
+
+- name: Liblapack setup
+  apt: pkg=liblapack-dev state=present update_cache=true
+
+- name: Make setup
+  apt: pkg=make state=present update_cache=true
+
+- name: GCC setup
+  apt: pkg=gcc state=present update_cache=true
+
+- name: g++ setup
+  apt: pkg=g++ state=present update_cache=true
+
+- name: Python3-dev setup
+  apt: pkg=python3-dev state=present update_cache=true
+
+- name: Install Pip3
+  apt: pkg=python3-pip state=present update_cache=true
+
+- name: Clone Machine Learning Notebooks
+  git:
+    repo: "ssh://git@github.com/ilmarinen/machine-learning-notebooks.git"
+    version: master
+    dest: /var/www/diagnoss/code/gatenoss
+    accept_hostkey: yes
+  become: no
+
+- name: Create virtualenv
+  shell: "python3 -m venv /home/ubuntu/venv"
+
+- name: Install Python dependencies
+  shell: "/home/ubuntu/venv/bin/pip install -r /home/ubuntu/machine-learning-notebooks/requirements.txt"

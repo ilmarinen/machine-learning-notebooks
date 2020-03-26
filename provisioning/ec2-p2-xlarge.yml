@@ -1,0 +1,29 @@
+Description: >-
+  A single p2.xlarge EC2 instance with a security group
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22, http over port 80 and ssl over port 443
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: p2.xlarge
+      KeyName: "xavier-macbook-pro-2020"
+      ImageId: ami-005117da5d1874d04
+      SecurityGroups:
+        - !Ref SecurityGroup
